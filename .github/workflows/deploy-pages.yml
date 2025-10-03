@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Copy files to root for GitHub Pages
+        run: |
+          # Create a temporary directory for GitHub Pages
+          mkdir -p gh-pages-build
+          
+          # Copy all files from new/ directory to root level for GitHub Pages
+          cp -r new/* gh-pages-build/
+          
+          # Copy additional root files if they exist
+          [ -f robots.txt ] && cp robots.txt gh-pages-build/ || echo "robots.txt not found in root"
+          [ -f sitemap.xml ] && cp sitemap.xml gh-pages-build/ || echo "sitemap.xml not found in root"
+          
+          # Ensure robots.txt and sitemap.xml are available at root level
+          if [ -f new/robots.txt ]; then
+            cp new/robots.txt gh-pages-build/
+          fi
+          if [ -f new/sitemap.xml ]; then
+            cp new/sitemap.xml gh-pages-build/
+          fi
+          
+          # List contents to verify
+          echo "Contents of gh-pages-build:"
+          ls -la gh-pages-build/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './gh-pages-build'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
