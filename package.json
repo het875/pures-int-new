@@ -1,0 +1,27 @@
+{
+  "name": "pures-international-website",
+  "version": "1.0.0",
+  "description": "Pures International - Premium Agricultural Export Company Website",
+  "main": "new/index.html",
+  "scripts": {
+    "dev": "live-server new/",
+    "build": "echo 'No build process needed for static site'",
+    "start": "live-server new/"
+  },
+  "keywords": [
+    "agricultural export",
+    "spices",
+    "fruits",
+    "vegetables",
+    "international trade",
+    "static website"
+  ],
+  "author": "Pures International",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

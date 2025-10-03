@@ -1,0 +1,87 @@
+{
+  "version": 2,
+  "public": true,
+  "buildCommand": null,
+  "devCommand": null,
+  "installCommand": null,
+  "outputDirectory": "new",
+  "framework": null,
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/new/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-XSS-Protection",
+          "value": "1; mode=block"
+        }
+      ]
+    },
+    {
+      "source": "/new/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/new/css/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/new/js/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/new/index.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/new/about.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/new/products.html"
+    },
+    {
+      "source": "/services",
+      "destination": "/new/services.html"
+    },
+    {
+      "source": "/blog",
+      "destination": "/new/blog.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/new/contact.html"
+    }
+  ]
+}
